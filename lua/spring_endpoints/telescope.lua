@@ -14,17 +14,20 @@ end
 local function search_endpoints()
 	local endpoints = parser.find_endpoints(vim.fn.getcwd())
 
+	local seen_paths = {} -- Para evitar duplicados
 	-- Filtrar los endpoints que NO contengan "[REQUEST]"
 	local filtered_endpoints = {}
 	for _, ep in ipairs(endpoints) do
-		if not ep.path:match("^REQUEST") then
+		if not ep.path:match("^REQUEST") and not seen_paths[ep.path] then
 			table.insert(filtered_endpoints, ep)
+			seen_paths[ep.path] = true
 		end
 	end
 
 	pickers
 		.new({}, {
 			prompt_title = "Spring Boot Endpoints",
+			prompt_prefix = " ",
 			finder = finders.new_table({
 				results = filtered_endpoints,
 				entry_maker = function(entry)

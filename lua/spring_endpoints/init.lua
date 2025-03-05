@@ -3,7 +3,6 @@ local M = {}
 -- Verificar si el usuario tiene instalado Telescope, fzf-lua o snacks.picker
 local has_telescope, telescope = pcall(require, "spring_endpoints.telescope")
 local has_fzf, fzf = pcall(require, "spring_endpoints.fzf")
-local has_snacks, snacks = pcall(require, "spring_endpoints.snacks")
 
 -- Función principal de búsqueda
 function M.search()
@@ -11,8 +10,6 @@ function M.search()
 		telescope.search_endpoints()
 	elseif has_fzf then
 		fzf.search_endpoints()
-	elseif has_snacks then
-		snacks.search_endpoints()
 	end
 end
 
